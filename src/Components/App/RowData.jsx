@@ -3,7 +3,8 @@ import React from 'react';
 const endpoint = 'https://addup.sierraclub.org/api/v1/campaigns';
 
 const RowData = props => {
-	const { campaign } = props;
+	let { campaign, index } = props;
+	index++;
 	let { 
 		club_id_name, 
 		title, 
@@ -26,11 +27,12 @@ const RowData = props => {
 
 	return (
 		<tr>
+			<td>{index}</td>
 			<td>{created_by || 'n/a'}</td>
 			<td>{title || 'n/a'}</td>
 			<td>{gau_id || 'n/a'}</td>
 			<td>{publish_status || 'n/a'}</td>
-			<td><a href={`${endpoint}/${slug}`}>{`${endpoint}/${slug}`}</a></td>
+			<td><a href={`${endpoint}/${slug}`} target="_blank">{`${endpoint}/${slug}`}</a></td>
 			<td>{club_id_name || 'n/a'}</td>
 			<td>{start_date || 'n/a'}</td>
 			<td>{end_date || 'n/a'}</td>
