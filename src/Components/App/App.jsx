@@ -3,8 +3,8 @@ import FetchData from '../../util/FetchData.js';
 import RowData from './RowData.jsx';
 
 let endpoint = 'https://addup.sierraclub.org/api/v1/campaigns';
-let url = endpoint; // local testing data
-// url = './campaigns.json'; // local testing data
+let url = endpoint;
+url = './campaigns.json'; // local testing data
 
 class App extends React.Component {
 	constructor(props) {
@@ -49,6 +49,7 @@ class App extends React.Component {
 				<table>
 					<thead>
 						<tr>
+							<th> # </th>
 							<th>Organizer</th>
 							<th>Title</th>
 							<th>GAU</th>
@@ -63,11 +64,11 @@ class App extends React.Component {
 					</thead>
 					<tbody>
 						{
-							campaigns.length < 1 ? <tr><td colSpan="10"><div className="loading"/></td></tr> : null
+							campaigns.length < 1 ? <tr><td colSpan="11"><div className="loading"/></td></tr> : null
 						}
 						{
-							this.state.campaigns.map(campaign => {
-								return <RowData campaign={campaign} key={campaign.id} />
+							this.state.campaigns.map((campaign, index) => {
+								return <RowData campaign={campaign} key={campaign.id} index={index}/>
 							})
 						}
 					</tbody>
