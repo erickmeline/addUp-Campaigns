@@ -4,7 +4,7 @@ import RowData from './RowData.jsx';
 
 let endpoint = 'https://addup.sierraclub.org/api/v1/campaigns';
 let url = endpoint;
-url = './campaigns.json'; // local testing data
+// url = './campaigns.json'; // local testing data
 
 class App extends React.Component {
 	constructor(props) {
@@ -29,12 +29,9 @@ class App extends React.Component {
 
 	getCampaigns() {
 		const { slugs } = this.state;
-		const promises = slugs.map(slug => FetchData(endpoint+'/'+slug).then(response => response.data));
+		const promises = slugs.map(slug => FetchData(endpoint+'/'+slug).catch(console.warn.bind(console)).then(response => response.data));
 		Promise.all(promises).then(results => {
-			const cleanResults = results.map((campaign) => {
-				if (campaign) return campaign
-			})
-			this.setState({campaigns: cleanResults})
+			this.setState({campaigns: results});
 		});
 	}
 
