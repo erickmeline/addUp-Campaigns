@@ -1,19 +1,14 @@
-const FetchData = async (url) => {
-	const headers = {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json'
+const FetchData = (url) => {
+	if (url) {
+		const headers = {'content-type': 'application/json'};
+		return fetch(url,{headers:headers})
+		.then(response => {
+			if (response.ok) {
+				return response.json();
+			}
+				throw new Error('Request failed!');
+		}, networkError => console.log(networkError.message))
 	}
-	const response = await fetch(url, headers);
-	if (!response.ok) {
-		throw response
-	}
-	try {
-		const data = await response.json();
-		return data;
-	}
-	catch (error) {
-		throw error.text() || 'Uncaught Fetch Error Occured'
-	}
-}
+};
 
 export default FetchData;
