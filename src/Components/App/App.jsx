@@ -4,7 +4,8 @@ import RowData from './RowData.jsx';
 
 let endpoint = 'https://addup.sierraclub.org/api/v1/campaigns';
 let url = endpoint;
-// url = './campaigns.json'; // local testing data
+let count = 0;
+url = './campaigns.json'; // local testing data
 
 class App extends React.Component {
 	constructor(props) {
@@ -29,7 +30,10 @@ class App extends React.Component {
 
 	getCampaigns() {
 		const { slugs } = this.state;
-		const promises = slugs.map(slug => FetchData(endpoint+'/'+slug).catch(console.warn.bind(console)).then(response => response.data));
+		const promises = slugs.map(slug => {
+			count++;
+			return FetchData(endpoint+'/'+slug).catch(console.warn.bind(console)).then(response => response.data)
+		});
 		Promise.all(promises).then(results => {
 			this.setState({campaigns: results});
 		});
@@ -42,7 +46,7 @@ class App extends React.Component {
 		}
 		return (
 			<div className="App">
-				<header>Current AddUp Campaigns</header>
+				<header>Current AddUp Campaigns: {campaigns.length < 1 ? <span>loading </span> : null} {count}</header>
 				<table>
 					<thead>
 						<tr>
